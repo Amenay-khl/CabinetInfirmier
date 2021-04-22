@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<schema targetNamespace = "http://www.ujf-grenoble.fr/l3miage/medical"
+        xmlns:med="http://www.ujf-grenoble.fr/l3miage/medical" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        elementFormDefault = "qualified">
+
+    <element name="cabinet" type="med:Cabinet">
+        <keyref name="idMedExiste" refer="med:idMed">
+            <selector xpath="med:patients/med:patient/med:visite"/>
+            <field xpath="@intervenant"/>
+        </keyref>
+    </element>
+
+    <complexType name="Cabinet">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="adresse" type="med:AdresseCabinet"/>
+            <element name="infirmiers" type="med:Infirmiers">
+                <unique name="idMed">
+                    <selector xpath="med:infirmier"/>
+                    <field xpath="@id"/>
+                </unique>
+            </element>
+            <element name="patients" type="med:Patients"/>
+        </sequence >
+    </complexType>
+
+    <complexType name="AdresseCabinet">
+        <sequence>
+            <element name="numéro" type="int"/>
+            <element name="rue" type="string"/>
+            <element name="ville" type="string"/>
+            <element name="codePostal" type="med:cPOST"/>
+        </sequence >
+    </complexType>
+
+    <complexType name="Infirmiers">
+        <sequence>
+            <element name="infirmier" type="med:Infirmier" minOccurs ="1" maxOccurs="unbounded" />
+        </sequence>	
+    </complexType>
+
+
+    <complexType name="Infirmier">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="prénom" type="string"/>
+            <element name="photo" type="med:typeIMG"/>
+        </sequence >
+        <attribute name="id" type="med:typeID"/>
+    </complexType>
+
+    <complexType name="Patients">
+        <sequence>
+            <element name="patient" type="med:Patient" minOccurs ="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="Patient">
+        <sequence>
+            <element name="nom" type="string"/>
+            <element name="prénom" type="string"/>
+            <element name="sexe" type="med:Sexe"/>
+            <element name="naissance" type="date"/>
+            <element name="numéro" type="med:NIR"/>
+            <element name="adresse" type="med:AdressePatient"/>
+            <element name="visite" type="med:Visite" minOccurs ="0" maxOccurs="unbounded" />
+        </sequence >
+    </complexType>
+
+    <complexType name="AdressePatient">
+        <sequence>
+            <element name="étage" type="int"  minOccurs="0" maxOccurs="1" />
+            <element name="numéro" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="rue" type="string"/>
+            <element name="ville" type="string"/>
+            <element name="codePostal" type="med:cPOST"/>
+            <element name="visite" type="med:Visite" minOccurs ="0" maxOccurs="unbounded" />
+        </sequence >
+    </complexType>
+
+    <complexType name="Visite">
+        <sequence>
+            <element name="acte" type="med:Acte" minOccurs ="1" maxOccurs="unbounded" />
+        </sequence >
+        <attribute name="date" type="date"/>
+        <attribute name="intervenant" type="med:typeID"/>
+    </complexType>
+
+    <simpleType name="Sexe">
+        <restriction base = "string">
+            <enumeration value = "M"/>
+            <enumeration value = "F"/>
+        </restriction >
+    </simpleType>
+
+    <complexType name="Acte">
+        <attribute name="id" type="med:idActe"/>
+    </complexType>
+
+    <simpleType name="typeID">
+        <restriction base = "string">
+            <pattern value="\d{3}|\s{0}"/>
+        </restriction >
+    </simpleType>
+
+
+    <simpleType name="idActe">
+        <restriction base = "string">
+            <pattern value="(\d){3}"/>
+        </restriction >
+    </simpleType>
+
+    <simpleType name="cPOST">
+        <restriction base = "string">
+            <pattern value="(\d){5}"/>
+        </restriction >
+    </simpleType>
+
+    <simpleType name="typeIMG">
+        <restriction base = "string">
+            <pattern value="[\S]+[.]png|[\S]+[.]jpg"/>
+        </restriction >
+    </simpleType>
+
+    <simpleType name="NIR">
+        <restriction base = "string">
+            <pattern value="(([1-4]|[7]|[8])([0-9][0-9])(([0][1-9])|([1][0-2])|([2][0-9])|([3][0-9])|([4][0-2])|([5][0-9])|([6][0-9])|([7][0-9])|([8][0-9])|([9][0-9]))(((([0-9][1-9])|([2][A-B]))([0-9][0-9][1-9]))|([9][7-8][0-9][0-9][1-9])|([9][9][0-9][0-9][1-9]))([0-9][0-9][1-9])(([0][1])|([1-8][0-9])|([9][0-7])))"/>
+        </restriction >
+    </simpleType>
+
+</schema>
+

@@ -1,0 +1,50 @@
+<html xmlns:act="http://www.ujf-grenoble.fr/l3miage/actes" xmlns="http://www.ujf-grenoble.fr/l3miage/medical">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>infirmiere.xsl</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript">
+                    function openFacture(prenom, nom, actes) {
+                    var width  = 500;
+                    var height = 300;
+                    if(window.innerWidth) {
+                    var left = (window.innerWidth-width)/2;
+                    var top = (window.innerHeight-height)/2;
+                    }
+                    else {
+                    var left = (document.body.clientWidth-width)/2;
+                    var top = (document.body.clientHeight-height)/2;
+                    }
+                    var factureWindow = window.open('','facture','menubar=yes, scrollbars=yes, top='+top+', left='+left+', width='+width+', height='+height+'');
+                    factureText = "Facture pour : " + prenom + " " + nom;
+                    factureWindow.document.write(factureText);
+                    }        
+                </script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Miriam Libre">
+<style>
+                    .w3-mir {
+                    font-family: "Lobster", serif;
+                    text-align: center;
+                    }
+                </style>
+</head>
+<body class="w3-container w3-auto">
+<div class="w3-container w3-mir">
+<p class="w3-xxxlarge">Liste des patients</p>
+</div>
+<div class="w3-panel w3-pale-blue w3-border">
+<h3>Bonjour ,</h3>
+<p>Aujourd'hui, vous avez 
+                        0
+                        patients.</p>
+</div>
+<br>
+<br>
+<br>
+<div class="w3-container">
+<ul class="w3-ul w3-card-4"></ul>
+</div>
+<br>
+</body>
+</html>
